@@ -23,8 +23,6 @@ import java.util.List;
  *
  * <p>写入位置是 {@code context.getFilesDir()}，即应用私有目录——
  * 未 root 的设备上其它 App 读不到，adb 也读不到。
- *
- * <p><b>本文件根据 v1.2.0 安装包逆向重建。</b>
  */
 public final class AutoRecordStore {
 

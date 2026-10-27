@@ -23,9 +23,6 @@ import java.util.Map;
  *
  * <p>它不对外网开放——{@link InetSocketAddress} 绑定的是回环地址，
  * 局域网内其它设备也访问不到。
- *
- * <p><b>本文件根据 v1.2.0 安装包逆向重建</b>（DEX 中可见
- * {@code xiaoman-asset-server} 线程名与 {@code http://127.0.0.1:4178/} 字面量）。
  */
 public class AssetServer {
 

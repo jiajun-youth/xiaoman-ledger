@@ -16,7 +16,7 @@
 - [第 5 步 · 验证](#第-5-步--验证)
 - [第 6 步 · 日常改代码的循环](#第-6-步--日常改代码的循环)
 - [进阶 A · 用 GitHub Pages 让网页版直接上线](#进阶-a--用-github-pages-让网页版直接上线)
-- [进阶 B · 用 Release 分发 APK](#进阶-b--用-release-分发-apk)
+- [进阶 B · 发 Release：让手机一键下载](#进阶-b--发-release让手机一键下载)
 - [进阶 C · 用 Actions 自动打包 APK](#进阶-c--用-actions-自动打包-apk)
 - [常见报错排查](#常见报错排查)
 - [安全铁律](#安全铁律)
@@ -447,30 +447,50 @@ Your site is live at https://你的用户名.github.io/xiaoman-ledger/
 
 ---
 
-## 进阶 B · 用 Release 分发 APK
+## 进阶 B · 发 Release：让手机一键下载
 
 **不要把 `.apk` 提交进 Git 仓库**——二进制文件会让仓库体积永久膨胀，且每次改版都存一份历史。正确做法是用 **Release** 附件。
+
+### 关键：固定文件名 + 固定链接
+
+把附件**永远命名成同一个** `xiaoman-ledger.apk`，然后用这个地址引用它：
+
+```
+https://github.com/你的用户名/xiaoman-ledger/releases/latest/download/xiaoman-ledger.apk
+```
+
+`releases/latest/download/` 是 GitHub 的**永久重定向**，永远指向最新一个 Release 里的同名附件。好处是：
+
+- README 里的下载按钮**写一次，以后发版不用改**
+- 别人不用点进 Releases 页面翻找，**一次点击直接开始下载**
+- 链接短，分享到微信/QQ 时不容易被折叠
+
+### 操作步骤
 
 1. 仓库页右侧 → **Releases** → **Create a new release**
 2. **Choose a tag** 输入 `v1.2.0` → 选 **Create new tag on publish**
 3. **Release title**：`小满账本 v1.2.0`
 4. **Describe this release** 写更新说明：
+
    ```markdown
+   ## 手机安装
+   下载 xiaoman-ledger.apk，允许「安装未知来源应用」，点安装即可。
+
    ## 新增
    - 自动记账支持自定义分类规则
 
    ## 修复
    - 修复统计页在 2 月切换时的日期越界
-
-   ## 安装说明
-   1. 下载 `xiaoman-ledger-1.2.0.apk`
-   2. 允许「安装未知来源应用」
-   3. 安装前建议先导出 JSON 备份（覆盖安装可能失败，需卸载重装）
    ```
-5. 把 APK **拖进** 「Attach binaries」区域
-6. 点 **Publish release**
 
-之后别人就能在 `https://github.com/你的用户名/xiaoman-ledger/releases` 下载了。
+5. 把 APK **拖进** 「Attach binaries」区域
+6. **确认附件名是 `xiaoman-ledger.apk`**（不是 `app-debug.apk`）——点附件旁的铅笔图标可以改名
+7. 点 **Publish release**
+8. 用手机浏览器打开那个 `latest/download/...` 链接试一次，确认能直接下载
+
+### 发下一版时
+
+新 Release 的附件同样命名 `xiaoman-ledger.apk`，README 和已经分享出去的链接**都不用改**，会自动指向新版。
 
 > **别把签名密钥传上去。** Release 只放 APK，`.jks` 永远留在本地（或用 GitHub Secrets 存）。
 
@@ -530,7 +550,7 @@ jobs:
 
 - `android/` 目录必须先能在 Linux 上构建（`gradlew` 要有可执行位：`git update-index --chmod=+x android/gradlew`）
 - 签名密钥放到 **Settings → Secrets and variables → Actions**，用 `${{ secrets.KEYSTORE_BASE64 }}` 引用，**绝不要**写进 workflow 文件
-- 前面说过 `android/` 是逆向重建的参考实现，**首次跑很可能要修编译错误**——先在本地跑通再上 CI
+- **先在本地跑通一次构建再上 CI**，否则每次都要等几分钟才知道错在哪
 
 ---
 
@@ -686,8 +706,10 @@ git push origin v1.2.0
 
 ---
 
-发布完成后，建议再做的三件事：
+发布完成后，按这个顺序做三件事：
 
-1. **开启 GitHub Pages** —— 网页版立刻可用（进阶 A）
-2. **发一个 Release** —— 给别人一个明确的下载入口（进阶 B）
+1. **发一个 Release，附件命名 `xiaoman-ledger.apk`** —— 手机一键下载的关键，README 里的下载按钮靠它生效（进阶 B）
+2. **开启 GitHub Pages** —— 网页版立刻能试，不装也能玩（进阶 A）
 3. **在 README 顶部加截图** —— 比一千行说明都管用。手机截图放进 `docs/screenshots/`，然后 `![](docs/screenshots/overview.png)` 引用
+
+> 顺序很重要：**先有 Release**，README 顶部的「下载 APK」按钮才不是死链。

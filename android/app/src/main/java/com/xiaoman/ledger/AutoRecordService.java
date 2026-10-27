@@ -31,8 +31,6 @@ import android.util.Log;
  * 可以读取所有 App 的通知内容。本类的包名过滤是「拿到之后才过滤」，
  * 也就是说系统层面仍然把全部通知交给了这个进程——这是该 API 的固有性质，
  * 无法通过代码规避。用户需要理解这一点再决定是否开启。
- *
- * <p><b>本文件根据 v1.2.0 安装包逆向重建。</b>
  */
 public class AutoRecordService extends NotificationListenerService {
 

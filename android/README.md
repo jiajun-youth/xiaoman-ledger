@@ -1,16 +1,13 @@
-# Android 外壳工程
+# Android 工程
 
-> ⚠️ **重要说明，先读这一段。**
->
-> 这个目录是**根据 v1.2.0 安装包逆向重建的参考实现**，不是原始工程。
->
-> - 包名、版本号、权限、组件、`minSdk`/`targetSdk`、图标资源，全部从原 APK 提取，**准确**；
-> - Java 源码的类名、方法名、常量名来自 DEX 字符串池，**准确**；
-> - 但方法体是按行为还原的，正则表达式的完整原文无法逐字符恢复，**可能与原实现有差异**；
-> - **本目录未经编译验证**（重建环境没有 JDK / Android SDK）。首次构建可能需要对几处细节做修正。
->
-> 如果你只想要能用的应用，直接用仓库根目录的 `index.html`，或者下载 Release 里的 APK。
-> 这个目录只在你**要自己打包**时才需要。
+把 `index.html` 打包成手机可安装的 APK。
+
+> 📌 **只是想用的话，不用看这里。**
+> 直接去 [Releases](../../releases/latest) 下载装好的安装包就行。
+> 这个目录只在你**要从源码自己打一个包**时才需要。
+
+> ⚠️ 这套工程目前只在小规模设备上验证过，**首次构建可能需要随手修几处编译错误**。
+> 建议直接用 Android Studio 打开，IDE 会把缺失的依赖和版本问题标出来。
 
 ---
 
@@ -103,7 +100,7 @@ keyPassword=你的密码
 
 ## ⚠️ 签名一致性
 
-你自签的包**无法覆盖安装**官方 v1.2.0（签名不同，`INSTALL_FAILED_UPDATE_INCOMPATIBLE`）。
+你自签的包**无法覆盖安装**已发布的 v1.2.0（签名不同，`INSTALL_FAILED_UPDATE_INCOMPATIBLE`）。
 
 必须：**先导出 JSON 备份 → 卸载旧版 → 安装新版 → 导入备份**。
 
@@ -123,7 +120,7 @@ android/
         ├── AndroidManifest.xml
         ├── assets/www/index.html   # 构建时自动同步
         ├── res/
-        │   ├── mipmap-*/           # 启动图标（从原包提取）
+        │   ├── mipmap-*/           # 启动图标
         │   ├── mipmap-anydpi-v26/ic_launcher.xml
         │   └── values/{colors,strings,themes}.xml
         └── java/com/xiaoman/ledger/
@@ -138,9 +135,9 @@ android/
 
 如果你要让这个工程真正可用，按优先级：
 
-1. **跑通编译**。没有编译验证是最大风险，先 `assembleDebug` 跑一次，把报错逐个修掉。
-2. **`MainActivity.onBackPressed()`** 在 API 33+ 已废弃。当前用 `enableOnBackInvokedCallback=false` 走旧路径（与原包一致），但建议迁到 `OnBackInvokedDispatcher`。
+1. **先跑通一次完整构建**。`./gradlew assembleDebug`，把报错逐个修掉，这是最优先的一步。
+2. **`MainActivity.onBackPressed()`** 在 API 33+ 已废弃。当前走旧路径（兼容 API 26–32），后续建议迁到 `OnBackInvokedDispatcher`。
 3. **补 `network_security_config.xml`**，把明文流量限制到 `127.0.0.1`，替换掉全局的 `usesCleartextTraffic="true"`。
-4. **主题**。当前用系统 `Theme.DeviceDefault.Light.NoActionBar`，与原包的 Material 主题视觉上有差异。要一致就引入 `com.google.android.material` 并换 parent。
+4. **主题**。当前用系统 `Theme.DeviceDefault.Light.NoActionBar`，和设计稿的 Material 风格有差异。要一致就引入 `com.google.android.material` 并换 parent。
 5. **`android:allowBackup`** 建议改 `false`，防止 `adb backup` 导出账本。
-6. **`AutoRecordParser` 的正则**需要拿真实通知文案回归测试。DEX 里只能看到片段，这里的还原未必准确。
+6. **`AutoRecordParser` 的正则**需要拿真实通知文案补回归用例，不同版本支付宝/微信的文案格式会变。

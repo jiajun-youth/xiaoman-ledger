@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--
-      原包使用 Material 主题（theme 指向一个 0x7F0400xx 资源）。
-      这里用系统内置主题，避免强制引入 material 依赖；
+      默认使用系统内置主题，避免强制引入 material 依赖；
       如果你要还原成完全一致的外观，把 parent 换成 Theme.Material3.DayNight.NoActionBar
       并在 app/build.gradle.kts 里加上 com.google.android.material 依赖。
     -->

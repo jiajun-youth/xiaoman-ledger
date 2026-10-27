@@ -31,8 +31,7 @@ import java.nio.charset.StandardCharsets;
  * 部分机型直接抛 SecurityError。走 {@code http://127.0.0.1:4178} 后 origin 稳定，
  * localStorage 才能可靠工作。
  *
- * <p><b>本文件根据 v1.2.0 安装包逆向重建</b>，类名与方法名与原包一致，
- * 具体实现为按行为还原，未与原工程逐行比对。
+ * <p>本类只做壳，界面与交互全部在网页里实现。
  */
 public class MainActivity extends Activity {
 

@@ -1,216 +1,190 @@
+<!--
+  下载链接用的是 releases/latest/download/ 固定地址：
+  发新版本时只把附件命名为 xiaoman-ledger.apk，这里的按钮就一直有效，不用改 README。
+-->
+<div align="center">
+
 # 小满账本 · Xiaoman Ledger
 
-> 把日子记清楚。
+**把日子记清楚。**
 
-一个**离线优先**的记账工具。整个应用就是一个 HTML 文件，不依赖任何框架、不联网、不需要账号，数据只存在你本机。
+一个离线优先的记账工具。不联网、不注册、不需要账号，数据只存在你自己的手机上。
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-235c48.svg)](LICENSE)
-![Platform](https://img.shields.io/badge/platform-Web%20%7C%20Android-173f32.svg)
-![Size](https://img.shields.io/badge/size-single%20file-e0783f.svg)
+[![Download APK](https://img.shields.io/badge/下载_APK-Android_8.0+-235c48?style=for-the-badge&logo=android&logoColor=white)](https://github.com/jiajun-youth/xiaoman-ledger/releases/latest/download/xiaoman-ledger.apk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-df783f?style=for-the-badge)](LICENSE)
 
----
+**[⬇️ 下载安装包](https://github.com/jiajun-youth/xiaoman-ledger/releases/latest/download/xiaoman-ledger.apk)** · 145 KB · 秒下 · 无需 Root
 
-## 目录
-
-- [为什么做这个](#为什么做这个)
-- [功能](#功能)
-- [快速开始](#快速开始)
-- [数据与隐私](#数据与隐私)
-- [项目结构](#项目结构)
-- [技术实现](#技术实现)
-- [打包成 Android APK](#打包成-android-apk)
-- [开发约定](#开发约定)
-- [参与贡献](#参与贡献)
-- [许可协议](#许可协议)
+</div>
 
 ---
 
-## 为什么做这个
+## 📱 手机安装
 
-市面上的记账 App 大多要求注册账号、上传云端、绑定手机号。记账是件很私人的事，没必要把每一笔消费交给服务器。
+**不需要电脑，不需要注册，也不需要 Root。**
 
-小满账本的做法是反过来的：
+### 第 1 步：下载
 
-- **一个 HTML 文件就是整个 App**，双击就能用，拷到 U 盘也能用；
-- **零依赖**，没有 npm、没有打包器、没有 node_modules；
-- **零联网**，代码里没有任何 `fetch` / `XMLHttpRequest`，断网、飞行模式下功能完全一致；
-- **数据是你的**，存在浏览器 `localStorage`，随时可以导出成 JSON / CSV。
+点上面的 **下载 APK** 按钮，或者点这里：
 
-Android 版只是给这个网页套了一层 WebView 外壳，额外加了一个「通知监听自动记账」的原生能力。
+**<https://github.com/jiajun-youth/xiaoman-ledger/releases/latest/download/xiaoman-ledger.apk>**
 
-## 功能
+> 💡 **如果页面打不开**：微信、QQ 的内置浏览器常会拦截 GitHub 链接。
+> 点右上角「···」→ **在浏览器中打开**，或者复制链接到 Chrome / 系统浏览器。
 
-**记账**
+### 第 2 步：打开下载好的文件
 
-- 支出 / 收入双向记账，金额、分类、日期、备注
-- 12 个内置分类（餐饮、交通、购物、居住、娱乐、医疗、学习、人情、宠物、通讯、运动、其他），支持自定义名称、图标、颜色
-- 按天分组的流水列表，支持按分类筛选、关键词搜索、按月份切换
-- 记错了可以直接改、可以删
+通知栏会提示下载完成，点它；或者去「文件管理 → 下载」里找到 `xiaoman-ledger.apk`。
 
-**统计**
+### 第 3 步：允许一次「安装未知应用」
 
-- 月度总览：本月支出、日均支出、较上月涨跌
-- 分类占比排行
-- 按日柱状趋势图
-- 「有支出的日子」计数与月度洞察文案
+第一次装非应用商店的 App 时，系统会拦一下：
 
-**数据**
+1. 弹出「为了安全，你的手机不允许安装未知应用」
+2. 点 **设置**
+3. 打开 **允许来自此来源**
+4. 按返回键回到安装界面
 
-- JSON 全量备份 / 恢复（带 `schemaVersion` 校验，可跨版本迁移）
-- CSV 导出（Excel 友好，做了公式注入防护：`= + - @` 开头的内容会被转义）
-- 存储空间占用显示
+> 这一步只需要做一次。之后装更新就不用再设了。
 
-**自动记账（Android 独有，v1.1.0 起）**
+### 第 4 步：点「安装」
 
-- 监听支付宝、微信的支付通知，自动提取金额、商户、时间
-- 三重金额正则：`¥12.34` / `12.34元` / 纯数字 + 关键词
-- 支出词 / 收入词判断方向，忽略词过滤营销通知
-- 60 秒内相同通知去重（指纹存 SharedPreferences）
-- 先进「待确认」队列，你点头才算入账——**不会替你花钱记账**
-- 支持按商户关键词自定义分类规则
+看到「应用已安装」就好了。**打开就能记账，不用登录。**
 
-## 快速开始
+---
 
-### 网页版（推荐先试这个）
+<details>
+<summary><b>装不上？点这里看常见问题</b></summary>
+
+**「解析软件包时出现问题」**
+下载不完整。删除已下载的文件，重新下一次。别用迅雷/下载器加速，容易截断。
+
+**「应用未安装」/「安装包无效」**
+- 手机系统低于 Android 8.0（本应用要求 8.0+）
+- 或者之前装过**其他签名**的同名版本，先卸载旧的再装
+
+**「此应用可能有害」/ 风险提示**
+所有不在应用商店上架的应用都会显示这条，属于系统对「未知来源」的统一提示。
+确认来源是本仓库后，点「仍然安装」。
+
+**安装时提示「已存在更高版本」**
+你手机上已经有 v1.2.0 或更新的版本了，不需要重复安装。
+
+**装完打开是白屏**
+杀掉进程重开一次。仍然白屏的话，反馈时附上手机型号和 Android 版本。
+
+**换手机怎么迁移账本？**
+旧手机：应用内 → 设置 → **导出备份**（得到一个 .json 文件）
+新手机：安装 → 设置 → **导入备份** → 选那个文件。
+
+</details>
+
+---
+
+## ✨ 功能
+
+**记一笔**
+
+- 支出 / 收入双向记账：金额、分类、日期、备注
+- 12 个内置分类，可自己改名、换图标、换颜色
+- 按天分组的流水，支持分类筛选、关键词搜索、按月切换
+- 记错了随时改、随时删
+
+**看明白**
+
+- 本月支出、日均支出、较上月涨跌
+- 分类占比排行、按日柱状趋势
+- 「有支出的日子」计数与月度洞察
+
+**自动记账**（可选，需开权限）
+
+- 监听支付宝、微信的支付通知，自动抓取金额和商户
+- 三重金额规则 + 收支方向判断 + 营销通知过滤
+- 先进「待确认」队列，**你点了才算入账**，不会替你记账
+- 支持按商户关键词自定义分类
+
+**数据是自己的**
+
+- 一键导出 JSON 全量备份，换手机不丢
+- 导出 CSV，Excel 直接打开
+- 不做任何上传
+
+---
+
+## 💻 也可以不装，直接用网页版
+
+网页版和 App 是同一份代码，功能一致，只是没有「自动记账」（那需要读通知，网页做不到）。
+
+**在线直接用**：<https://jiajun-youth.github.io/xiaoman-ledger/>
+
+或者下载到本地：
 
 ```bash
-git clone https://github.com/<你的用户名>/xiaoman-ledger.git
+git clone https://github.com/jiajun-youth/xiaoman-ledger.git
 cd xiaoman-ledger
 ```
 
-然后直接双击 `index.html`，或者在项目目录起一个静态服务器：
+双击 `index.html` 就能用。
 
-```bash
-# Python（系统自带）
-python -m http.server 8000
+> 想加到手机桌面当 App 用：用 Chrome 打开网页 → 菜单 → **添加到主屏幕**。
+> 效果接近原生，但没有自动记账。
 
-# 或 Node
-npx serve .
-```
+---
 
-打开 <http://localhost:8000> 即可。
-
-> 直接 `file://` 打开也能用，功能不缺。但浏览器对 `file://` 下的 `localStorage` 有隔离策略，建议用 `http://localhost` 访问，换浏览器/换路径时数据不会「丢」。
-
-### Android 版
-
-见 [打包成 Android APK](#打包成-android-apk)。
-
-## 数据与隐私
-
-这一节请务必读完，它决定了你敢不敢用。
+## 🔒 数据与隐私
 
 | 项目 | 情况 |
-| --- | --- |
-| 联网 | **完全不联网**。源码中无任何网络请求，Android 端的 `INTERNET` 权限仅用于访问本机 `127.0.0.1` 的静态资源服务器 |
+|---|---|
+| 联网 | **完全不联网**。代码中无任何网络请求，Android 的 `INTERNET` 权限仅用于访问手机本机的资源服务 |
 | 账号 | 不注册、不登录、无用户体系 |
 | 埋点 | 无 |
-| 数据位置 | 网页版：浏览器 `localStorage`（键名 `xiaoman-ledger-v1`）<br>Android 版：WebView 的 `localStorage` + 应用私有目录 |
+| 数据位置 | 网页版：浏览器本地存储<br>App：手机内部存储，其它应用无法读取 |
 | 数据上传 | 没有任何上传代码 |
-| 删除数据 | 在「设置」里清空账本，或清除浏览器站点数据；卸载 App 即彻底删除 |
+| 卸载 | 卸载即彻底删除，没有残留 |
 
-**关于 Android 的「通知使用权」**：这是 Android 里权限最大的授权之一，技术上开启后可以读取**所有** App 的通知内容。本项目的 `AutoRecordService` 在拿到通知后，会**先按包名过滤**，只处理以下三个来源，其余通知直接丢弃、不落盘：
+**关于「通知使用权」**：开启后系统会把所有 App 的通知交给本应用，但代码只处理支付宝、微信两个来源，其余通知直接丢弃、不写入任何位置。不放心的话可以不开——自动记账是可选功能，关掉它其余功能一切正常。
 
-```kotlin
-private const val PKG_ALIPAY = "com.eg.android.AlipayGphone"  // 支付宝
-private const val PKG_WECHAT = "com.tencent.mm"               // 微信
-private const val PKG_SHELL  = "com.android.shell"            // 仅用于 adb 调试注入测试通知
-```
+---
 
-过滤后的通知只写入应用私有目录下的 `auto_queue.jsonl`，由前端通过 JS Bridge 取走并存入本地账本，**不会离开设备**。
-
-如果你不放心，完全可以不开这个权限——自动记账是可选功能，关掉它其余功能一切正常。
-
-## 项目结构
+## 📦 项目结构
 
 ```
 xiaoman-ledger/
-├── index.html                 # 整个应用：HTML + CSS + JS，单文件，约 8,500 行
+├── index.html                 # 整个应用：HTML + CSS + JS，单文件约 8,500 行
 ├── README.md
 ├── LICENSE
-├── .gitignore
 ├── docs/
-│   ├── APK分析报告.md          # 对 v1.2.0 安装包的逆向分析
-│   └── 发布到GitHub.md         # 从零发布到 GitHub 的完整步骤
-└── android/                   # Android WebView 外壳（构建 APK 用）
-    ├── settings.gradle.kts
-    ├── build.gradle.kts
-    ├── gradle.properties
-    └── app/
-        ├── build.gradle.kts
-        └── src/main/
-            ├── AndroidManifest.xml
-            ├── assets/www/index.html   # 构建时由脚本从上层的 index.html 同步
-            ├── res/...
-            └── java/com/xiaoman/ledger/
-                ├── MainActivity.kt
-                ├── AssetServer.kt
-                ├── AutoRecordService.kt
-                ├── AutoRecordParser.kt
-                └── AutoRecordStore.kt
+│   └── 发布到GitHub.md         # 把这个项目发布出去的完整步骤
+└── android/                   # Android 工程（构建 APK 用）
 ```
 
-## 技术实现
+## 🛠 技术实现
 
-**前端**：原生 JavaScript（ES2020+），无框架。渲染是「状态 → 模板字符串 → `innerHTML`」，所有插入到 HTML 的文本统一走 `escapeHTML()`。路由用 `location.hash`（`#/overview`、`#/records`、`#/stats`、`#/categories`、`#/auto`），五个页面。
+**前端**：原生 JavaScript，无框架、无构建步骤。状态变化后重渲染模板字符串，所有插入 HTML 的文本统一走 `escapeHTML()`。路由用 `location.hash`，五个页面：总览 / 流水 / 统计 / 分类 / 自动记账。
 
-**样式**：CSS 自定义属性做主题，一套变量控制纸色、墨色、绿色主色与橙色强调色。字体用系统栈（Avenir Next / 苹方 / 微软雅黑），数字用衬线体，呼应「账本」的手写感。响应式靠 `clamp()` 和容器查询宽度断点，手机、平板、桌面共用一套布局。
+**样式**：CSS 自定义属性控制主题，一套变量决定纸色、墨色、主色与强调色。字体用系统栈，数字用衬线体，呼应账本的手写感。
 
-**为什么用单文件**：这个项目的核心约束是「十年后打开还能用」。没有构建工具，就没有依赖腐烂；没有依赖，就不需要为了修一个漏洞升级整条工具链。代价是文件大、不好做代码分割——这是有意识的取舍。
+**为什么是单文件**：这个项目的核心约束是「几年后打开还能用」。没有构建工具就没有依赖腐烂，没有依赖就不需要为了修一个漏洞升级整条工具链。代价是文件大、不好做代码分割——这是有意识的取舍。
 
-**Android 外壳**：
+**Android 外壳**：`MainActivity` 是一层 WebView 容器，另外起一个只监听 `127.0.0.1` 的迷你 HTTP 服务来托管页面资源。之所以不用 `file://` 直接加载，是因为 `file://` 下本地存储的 origin 是 `null`，不同厂商的 ROM 行为不一致，部分机型会直接报错。走本地回环地址后行为稳定统一。
 
-- `MainActivity` 是一层 WebView 容器，`setJavaScriptEnabled(true)`，注册 JS Bridge 名为 `XiaomanAndroid`；
-- 不用 `file:///android_asset/...` 加载页面，因为 `file://` 下 `localStorage` 的 origin 是 `null`，行为不可靠。改起一个只监听 `127.0.0.1` 的迷你 HTTP 服务（`AssetServer`，端口 4178）托管 `assets/www`，WebView 加载 `http://127.0.0.1:4178/`，此时 origin 稳定、`localStorage` 可用；
-- JS Bridge 暴露四个方法：`saveFile(name, content)`、`hasNotificationAccess()`、`openNotificationAccessSettings()`、`drainAutoRecords()`；
-- 系统返回键走 `onBackPressed` 回调给网页（`lambda$onBackPressed`），网页内先关弹窗再关页面。
+## 🔧 从源码构建 APK
 
-## 打包成 Android APK
-
-**前置**：JDK 17+、Android SDK Platform 34、Android Studio（或纯命令行 Gradle）。
+需要 JDK 17+、Android SDK Platform 34。
 
 ```bash
-cd android
-# 把最新的网页同步进 assets
-cp ../index.html app/src/main/assets/www/index.html
-# Windows PowerShell:
-# Copy-Item ..\index.html app\src\main\assets\www\index.html
-
-./gradlew assembleDebug      # 产物：app/build/outputs/apk/debug/app-debug.apk
-./gradlew assembleRelease    # 需要先配签名，见下
+git clone https://github.com/jiajun-youth/xiaoman-ledger.git
+cd xiaoman-ledger/android
+./gradlew assembleDebug
 ```
 
-**关于签名**，重要：
+产物：`app/build/outputs/apk/debug/app-debug.apk`
 
-1. 现在仓库里的 `android/` 是**根据 v1.2.0 安装包逆向重建的参考实现**，不是原始工程，也不保证能原样编译通过——API 行为按反编译结果还原，可能有个别细节需要你自己补。
-2. 自己打包请用**你自己的** keystore。**绝对不要把 `.jks` / `.keystore` 提交到 Git**（`.gitignore` 里已经挡住）。
-3. 自己签的 APK 无法覆盖安装官方 v1.2.0（签名不同），需要先卸载。卸载会清掉 `localStorage`，**升级前务必先导出 JSON 备份**。
+网页资源会在构建前自动从仓库根目录的 `index.html` 同步进 `assets/www/`，不需要手工复制两份。
 
-生成 keystore：
+签名与发布细节见 [`android/README.md`](android/README.md)。
 
-```bash
-keytool -genkeypair -v -keystore my-release.jks -alias xiaoman \
-  -keyalg RSA -keysize 2048 -validity 10950
-```
-
-然后在 `android/keystore.properties`（已 gitignore）里写：
-
-```properties
-storeFile=../my-release.jks
-storePassword=你的密码
-keyAlias=xiaoman
-keyPassword=你的密码
-```
-
-## 开发约定
-
-- 单文件应用，**不要**引入 npm 依赖或构建步骤；
-- 任何用户输入渲染到 HTML 前必须过 `escapeHTML()`；
-- 金额一律以**分**为单位存整数（`amountToCents`），只在显示时格式化成元，避免浮点误差；
-- 数据结构变更必须同时升 `SCHEMA_VERSION` 并在 `normalizeStore()` 里写迁移；
-- 提交信息用祈使句，一次提交只做一件事。
-
-## 参与贡献
+## 🤝 参与贡献
 
 1. Fork 本仓库
 2. 新建分支：`git checkout -b feat/你的功能`
@@ -218,8 +192,14 @@ keyPassword=你的密码
 4. 推送：`git push origin feat/你的功能`
 5. 开 Pull Request
 
-Issue 里反馈问题时，请附上系统版本、浏览器版本、复现步骤。涉及数据丢失的请先说清楚你用的是网页版还是 APK 版。
-
-## 许可协议
+## 📄 许可协议
 
 [MIT](LICENSE) © 2026 小满账本
+
+---
+
+<div align="center">
+
+如果这个小工具帮到了你，点个 ⭐ 就是最好的支持。
+
+</div>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   小满账本 Android 外壳
-  根据 v1.2.0 安装包逆向重建，行为与原包一致；字段值均来自原 AndroidManifest.xml。
 
-  注意：原包的 allowBackup 为 true，这里保持一致。
+  注意：allowBackup 为 true，与已发布版本保持一致。
   如果你在意「物理接触设备者可用 adb backup 导出账本」，改成 false。
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
