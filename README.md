@@ -15,11 +15,13 @@
 
 **[⬇️ 下载安装包](https://github.com/jiajun-youth/xiaoman-ledger/releases/latest/download/xiaoman-ledger.apk)** · 145 KB · 秒下 · 无需 Root
 
+<sub>**Android** → 点上面的按钮 · **iPhone / iPad** → 见下方「iPhone / iPad」一节（不用下载）</sub>
+
 </div>
 
 ---
 
-## 📱 手机安装
+## 📱 Android 手机安装
 
 **不需要电脑，不需要注册，也不需要 Root。**
 
@@ -78,6 +80,28 @@
 新手机：安装 → 设置 → **导入备份** → 选那个文件。
 
 </details>
+
+---
+
+## 🍎 iPhone / iPad
+
+iOS 不允许直接安装未签名的 App，而签名必须用 Mac + Xcode 完成。
+所以在 iPhone 上推荐把**网页版装成桌面应用**，效果和 App 基本一样，也不用花一分钱：
+
+1. 用 **Safari** 打开 <https://jiajun-youth.github.io/xiaoman-ledger/>
+   （必须 Safari——iOS 上的 Chrome 没有「添加到主屏幕」）
+2. 点底部中间的 **分享** 按钮
+3. 在列表里往下划，选 **添加到主屏幕**
+4. 右上角点 **添加**
+
+桌面上就出现「小满账本」了。点开是全屏运行、没有地址栏，数据同样存在本机、断网也能用。
+
+> ⚠️ **iOS 上没有「自动记账」。** 系统不开放读取其它应用通知的接口，
+> 不是功能没做，是 Apple 不允许。这是 Android 版独有的能力。
+>
+> 想要真正的 `.ipa`？见 [`ios/`](ios/README.md)，里面有 Xcode 工程源码。
+> 但必须你自己在 Mac 上打包签名：免费 Apple ID 只能装自己手机、7 天过期，
+> 给别人装需要每年 $99 的开发者账号。
 
 ---
 
@@ -151,11 +175,16 @@ cd xiaoman-ledger
 ```
 xiaoman-ledger/
 ├── index.html                 # 整个应用：HTML + CSS + JS，单文件约 8,500 行
+├── manifest.webmanifest       # 桌面安装配置：图标、名称、全屏模式
+├── apple-touch-icon.png       # iOS 主屏幕图标（180×180）
+├── icon-192.png               # Android / PWA 图标
+├── icon-512.png               # PWA 大图标
 ├── README.md
 ├── LICENSE
 ├── docs/
 │   └── 发布到GitHub.md         # 把这个项目发布出去的完整步骤
-└── android/                   # Android 工程（构建 APK 用）
+├── android/                   # Android 工程（构建 APK）
+└── ios/                       # iOS 工程（需 Mac + Xcode 构建，见其 README）
 ```
 
 ## 🛠 技术实现
