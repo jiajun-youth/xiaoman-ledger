@@ -1,0 +1,99 @@
+# ===========================================================================
+# 小满账本 · .gitignore
+# 原则：凡是「生成的」「含密码的」「本机路径的」一律不进仓库
+# ===========================================================================
+
+# ---------- 密钥与签名（最重要，泄露等于身份被盗） ----------
+*.jks
+*.keystore
+*.p12
+*.pfx
+keystore.properties
+signing.properties
+*.pem
+*.key
+!docs/**.example.key
+
+# ---------- Android / Gradle ----------
+android/.gradle/
+android/build/
+android/app/build/
+android/captures/
+android/local.properties
+android/.cxx/
+android/app/release/
+android/app/debug/
+android/.kotlin/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+!android/**/src/**/*.java
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.hprof
+.gradle/
+local.properties
+captures/
+.externalNativeBuild/
+.naver/
+
+# ---------- Node（本项目不需要，防止误引入） ----------
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+npm-debug.log*
+yarn-error.log*
+
+# ---------- 系统与编辑器垃圾 ----------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# ---------- 日志与临时文件 ----------
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# ---------- 本项目运行产物 ----------
+# 导出的账单备份可能含真实消费记录，绝不入库
+*.csv
+*.jsonl
+backup*.json
+xiaoman-ledger-backup*.json
+!android/app/src/main/assets/www/index.html
+
+# ---------- 构建时从根目录同步过去的副本，不重复入库 ----------
+# 唯一真源是仓库根目录的 index.html；android 构建前会自动复制过去
+android/app/src/main/assets/www/index.html
+
+# ---------- 逆向分析中间产物（本地研究用，不进仓库） ----------
+apk-analysis/
+*.unpacked/
+unpacked/
+decompiled/
+
+# ---------- 安全：防止误提交环境变量 ----------
+.env
+.env.*
+!.env.example

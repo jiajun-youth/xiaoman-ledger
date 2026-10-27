@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand_green">#173F32</color>
+    <color name="paper">#F4F1E9</color>
+    <color name="ink">#1A2A23</color>
+    <color name="orange">#DF783F</color>
+
+    <!-- 自适应图标背景色 -->
+    <color name="ic_launcher_background">@color/brand_green</color>
+</resources>

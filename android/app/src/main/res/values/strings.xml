@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">小满账本</string>
+    <!-- 通知监听服务的说明，会显示在系统「通知使用权」设置页 -->
+    <string name="auto_record_service_label">小满账本 · 自动记账</string>
+</resources>
